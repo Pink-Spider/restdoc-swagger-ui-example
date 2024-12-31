@@ -1,0 +1,170 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "restdoc-swagger-ui API 문서",
+    "description" : "restdoc-swagger-uiAPI 문서 입니다. 작성된 테스트 코드 기반으로 생성됩니다. 삭제와 생성이 자동화 되었습니다.",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8082"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/example/{pathVariable}" : {
+      "post" : {
+        "tags" : [ "Example" ],
+        "summary" : "Example endpoint summary",
+        "description" : "Example API",
+        "operationId" : "example-controller",
+        "parameters" : [ {
+          "name" : "pathVariable",
+          "in" : "path",
+          "description" : "Path variable description",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/example-pathVariable-1752322908"
+              },
+              "examples" : {
+                "example-controller" : {
+                  "value" : "{\n  \"name\" : \"name\",\n  \"age\" : 10,\n  \"hobbies\" : [ \"piano\", \"coding\" ],\n  \"subClassList\" : [ {\n    \"subName\" : \"subName\",\n    \"subAge\" : 10\n  } ]\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/example-pathVariable884838391"
+                },
+                "examples" : {
+                  "example-controller" : {
+                    "value" : "{\n  \"code\" : 0,\n  \"message\" : \"Success\",\n  \"value\" : {\n    \"name\" : \"name\",\n    \"age\" : 10,\n    \"hobbies\" : [ \"piano\", \"coding\" ],\n    \"subClassList\" : [ {\n      \"subName\" : \"subName\",\n      \"subAge\" : 10\n    } ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "example-pathVariable-1752322908" : {
+        "type" : "object",
+        "properties" : {
+          "hobbies" : {
+            "type" : "array",
+            "description" : "Hobbies",
+            "items" : {
+              "oneOf" : [ {
+                "type" : "object"
+              }, {
+                "type" : "boolean"
+              }, {
+                "type" : "string"
+              }, {
+                "type" : "number"
+              } ]
+            }
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Name"
+          },
+          "subClassList" : {
+            "type" : "array",
+            "description" : "Subclasses",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "subAge" : {
+                  "type" : "number",
+                  "description" : "Subclass age"
+                },
+                "subName" : {
+                  "type" : "string",
+                  "description" : "Subclass name"
+                }
+              }
+            }
+          },
+          "age" : {
+            "type" : "number",
+            "description" : "Age"
+          }
+        }
+      },
+      "example-pathVariable884838391" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "number",
+            "description" : "code"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "message"
+          },
+          "value" : {
+            "type" : "object",
+            "properties" : {
+              "hobbies" : {
+                "type" : "array",
+                "description" : "Hobbies",
+                "items" : {
+                  "oneOf" : [ {
+                    "type" : "object"
+                  }, {
+                    "type" : "boolean"
+                  }, {
+                    "type" : "string"
+                  }, {
+                    "type" : "number"
+                  } ]
+                }
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "Name"
+              },
+              "subClassList" : {
+                "type" : "array",
+                "description" : "Subclasses",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "subAge" : {
+                      "type" : "number",
+                      "description" : "Subclass age"
+                    },
+                    "subName" : {
+                      "type" : "string",
+                      "description" : "Subclass name"
+                    }
+                  }
+                }
+              },
+              "age" : {
+                "type" : "number",
+                "description" : "Age"
+              }
+            },
+            "description" : "value"
+          }
+        }
+      }
+    }
+  }
+}

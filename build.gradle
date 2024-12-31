@@ -1,0 +1,99 @@
+buildscript {
+    ext {
+        restdocsApiSpecVersion = '0.17.1'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.2'
+    id 'io.spring.dependency-management' version '1.1.2'
+
+    id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
+    id 'org.hidetake.swagger.generator' version '2.18.2'
+}
+
+group = 'io.pinkspider'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Backend-core 시작
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.modelmapper:modelmapper:3.2.0'
+    implementation 'com.fasterxml.jackson.module:jackson-module-mrbean:2.17.1'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation "com.epages:restdocs-api-spec-mockmvc:${restdocsApiSpecVersion}"
+    testImplementation 'org.springframework:spring-test'
+    // Backend-core 끝
+}
+
+openapi3 {
+    server = "http://localhost:8082"
+    title = getRootProject().name + " API 문서"
+    description = getRootProject().name + "API 문서 입니다. 작성된 테스트 코드 기반으로 생성됩니다. 삭제와 생성이 자동화 되었습니다."
+    version = getVersion()
+    outputDirectory = "build/resources/main/restdocs"
+    outputFileNamePrefix = getRootProject().name + "-api"
+    format = 'json'
+}
+
+tasks.register('copyJson') {
+    doFirst {
+        project.file('src/main/resources/restdocs').mkdirs()
+    }
+    doLast {
+        copy {
+            from "build/resources/main/restdocs/" + getRootProject().name + "-api.json"
+            into "src/main/resources/restdocs"
+        }
+    }
+    dependsOn('openapi3')
+}
+
+build {
+    finalizedBy copyJson
+}
+
+clean {
+    project.delete(
+            files("src/main/resources/restdocs/" + getRootProject().name + "-api.json")
+    )
+}
+
+tasks.named('test') {
+    systemProperty 'file.encoding', 'UTF-8'
+    useJUnitPlatform()
+}
