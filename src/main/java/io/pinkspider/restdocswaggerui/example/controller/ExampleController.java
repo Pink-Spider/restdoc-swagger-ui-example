@@ -1,6 +1,6 @@
 package io.pinkspider.restdocswaggerui.example.controller;
 
-import io.pinkspider.restdocswaggerui.api.ApiResult;
+import io.pinkspider.restdocswaggerui.global.api.ApiResult;
 import io.pinkspider.restdocswaggerui.example.dto.ExampleRequestDto;
 import io.pinkspider.restdocswaggerui.example.dto.ExampleResponseDto;
 import io.pinkspider.restdocswaggerui.example.service.ExampleService;

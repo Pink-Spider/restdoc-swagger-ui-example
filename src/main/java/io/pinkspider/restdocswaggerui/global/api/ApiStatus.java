@@ -1,4 +1,4 @@
-package io.pinkspider.restdocswaggerui.api;
+package io.pinkspider.restdocswaggerui.global.api;
 
 import lombok.Getter;
 
